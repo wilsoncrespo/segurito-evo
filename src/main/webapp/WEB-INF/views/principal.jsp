@@ -9,12 +9,22 @@
 </head>
 <body>
     <div class="container" style="margin-top: 50px;">
-        <div class="card">
-            <form action="/registrar" method="post" enctype="application/x-www-form-urlencoded">
-                <input type="text" name="code" />
-                <input type="submit" name="registrarEntrada" value="Registrar Entrada" />
-                <input type="submit" name="registrarSalida" value="Registrar Salida" />
-            </form>
+        <div class="card" style="margin: 0 auto">
+            <p style="margin: 0 auto">EVO</p>
+            <p style="margin: 0 auto">INGRESE SU CODIGO DE USUARIO</p>
+            <div style="margin: 0 auto; text-align: center">
+                <form action="/registrar" method="post" enctype="application/x-www-form-urlencoded">
+                    <br />
+                    <input type="text" name="code" style="margin: 0 auto"/>
+                    <br />
+                    <br />
+                    <p  style="margin: 0 auto">
+                        <input type="submit" name="registrarEntrada" value="Marcar Entrada"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="registrarSalida" value="Marcar Salida" />
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 </body>
