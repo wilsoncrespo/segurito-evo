@@ -9,12 +9,7 @@ import lombok.Data;
 @Data
 public class UserData {
 
-    @JsonProperty("code")
+    @JsonProperty("codigo_usuario")
     private String code;
 
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("user")
-    private String user;
 }
