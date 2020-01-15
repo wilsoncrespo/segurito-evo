@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class UserData {
 
-    @JsonProperty("code")
+    @JsonProperty("codigo_usuario")
     private String code;
 }
