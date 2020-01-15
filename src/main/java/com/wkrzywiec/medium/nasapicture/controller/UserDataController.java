@@ -32,8 +32,13 @@ public class UserDataController {
     private final int OUTPUT_ERROR = 1;
     private final int INPUT_SUCCESS = 2;
     private final int OUTPUT_SUCCESS = 3;
+    private final int INPUT_CONFLICT = 4;
+    private final int OUTPUT_CONFLICT = 5;
+    private final int INTERNAL_ERROR_IN_ORIGIN = 6;
 
     private final int OPERATION_SUCCESS = 201;
+    private final int OPERATION_CONFLICT = 409;
+    private final int INTERNAL_ERROR = 500;
 
     @GetMapping("/")
     public String showUserData(ModelMap model) {
@@ -53,23 +58,32 @@ public class UserDataController {
     }
 
     private int registerInput(UserData userData) {
-        int result = INPUT_ERROR;
         try {
-            result = makePostRequest(userData, "entradas") == OPERATION_SUCCESS ? INPUT_SUCCESS : INPUT_ERROR;
+            int operationResultCode = makePostRequest(userData, "entradas");
+            return processResultCode(operationResultCode, INPUT_SUCCESS, INPUT_CONFLICT, INPUT_ERROR);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return INPUT_ERROR;
     }
 
     private int registerOutput(UserData userData) {
-        int result = OUTPUT_ERROR;
         try {
-            result = makePostRequest(userData, "salidas") == OPERATION_SUCCESS ? OUTPUT_SUCCESS : OUTPUT_ERROR;
+            int operationResultCode = makePostRequest(userData, "salidas");
+            return processResultCode(operationResultCode, OUTPUT_SUCCESS, OUTPUT_CONFLICT, OUTPUT_ERROR);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return OUTPUT_ERROR;
+    }
+
+    private int processResultCode(int operationResultCode, int success, int conflict, int defaultReturnValue) {
+        switch (operationResultCode) {
+            case OPERATION_SUCCESS : return success;
+            case OPERATION_CONFLICT : return conflict;
+            case INTERNAL_ERROR : return INTERNAL_ERROR_IN_ORIGIN;
+            default: return defaultReturnValue;
+        }
     }
 
     private int makePostRequest(UserData userData, String serviceMethod) throws IOException {
@@ -90,6 +104,9 @@ public class UserDataController {
             case OUTPUT_ERROR : return "outputError";
             case INPUT_SUCCESS : return "inputSuccess";
             case OUTPUT_SUCCESS : return "outputSuccess";
+            case INPUT_CONFLICT : return "inputConflict";
+            case OUTPUT_CONFLICT : return "outputConflict";
+            case INTERNAL_ERROR_IN_ORIGIN : return "internalErrorOrigin";
             default: return "error";
         }
     }
