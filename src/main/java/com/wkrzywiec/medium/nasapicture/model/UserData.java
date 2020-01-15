@@ -11,10 +11,4 @@ public class UserData {
 
     @JsonProperty("code")
     private String code;
-
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("user")
-    private String user;
 }
